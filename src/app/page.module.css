@@ -15,7 +15,6 @@
   grid-template-columns: auto auto;
   padding: 5px;
   width: 50%;
-  /* gap: 300px; */
 }
 
 .add-container p {
@@ -33,4 +32,8 @@
   padding: 30px;
   gap: 30px;
   font-family: var(--font-geist-sans);
+}
+
+.vision-image .add-image {
+  cursor: pointer;
 }
