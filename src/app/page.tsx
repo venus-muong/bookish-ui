@@ -1,4 +1,6 @@
 "use client";
+import { useState } from 'react';
+import ImageModal from './ImageModal';
 
 // for photo layout: https://stackoverflow.com/a/39246470
 
@@ -7,6 +9,7 @@ import placeholder from "./icons/image-placeholder.png";
 import LazyImage from "./common/LazyImage";
 
 export default function Home() {
+  const [importImages, setImportImages] = useState(false);
   return (
     <div className={styles.page}>
       <h1 className={styles.title}>Create Vision Board</h1>
@@ -14,10 +17,18 @@ export default function Home() {
         <p>+ title</p>
         <p 
           onClick={ () => {
-              // imageModal
+              setImportImages(true);
           }}
         >+ images</p>
       </div>
+      {
+        importImages && (
+          <ImageModal 
+              importImages={importImages} 
+              setImportImages={setImportImages}
+          />
+        )
+      }
       <div className={styles["vision-image"]}>
         {Array(20).fill(undefined).map((_, i) => (
           <LazyImage
