@@ -9,42 +9,41 @@ import placeholder from "./icons/image-placeholder.png";
 import LazyImage from "./common/LazyImage";
 
 export default function Home() {
-  const [importImages, setImportImages] = useState(false);
+  const [importImages, setImportImages] = useState<boolean>(false);
+  const [images, setImages] = useState<number[]>([]);
+
   return (
-    <div className={styles.page}>
+    <div className={styles.page} style={{backgroundColor: importImages ? 'rgba(0, 0, 0, 0.2)' : ''}}>
       <h1 className={styles.title}>Create Vision Board</h1>
       <div className={styles["add-container"]}>
-        <p>+ title</p>
+        <p>Add Title</p>
         <p 
           onClick={ () => {
               setImportImages(true);
           }}
-        >+ images</p>
+        >Add Images</p>
       </div>
       {
         importImages && (
           <ImageModal 
-              importImages={importImages} 
               setImportImages={setImportImages}
+              setImages={setImages}
           />
         )
       }
       <div className={styles["vision-image"]}>
-        {Array(20).fill(undefined).map((_, i) => (
+        {images.map((img, i) => (
           <LazyImage
             key={i}
-            src={`https://picsum.photos/200/300?random=${i}`}
-            alt={`random ${i}`}
+            url={`https://picsum.photos/seed/${img + 1}/info`}
+            // src={`https://picsum.photos/200/300?random=${i}`}
+            alt={''}
+            style={{
+              width: '220px',
+              height: '300px'
+          }}
           />
         ))}
-        <div className={styles["add-image"]}>
-          <LazyImage
-            src={placeholder.src}
-            width={200}
-            height={300}
-            alt="placeholder"
-          />
-        </div>
       </div>
     </div>
   );

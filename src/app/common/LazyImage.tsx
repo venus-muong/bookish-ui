@@ -1,8 +1,18 @@
 import React, { useRef, useEffect, useState } from 'react';
 
-const LazyImage = ({ src, alt, ...props }) => {
+const LazyImage = ({ url, alt, ...props }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [src, setSrc] = useState('');
   const imgRef = useRef(null);
+
+  useEffect(() => {
+    const getPicsum = async () => {
+        const res = await fetch(url);
+        const json = await res.json();
+        setSrc(json.download_url);
+    }
+    getPicsum();
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -34,7 +44,7 @@ const LazyImage = ({ src, alt, ...props }) => {
       alt={alt}
       loading="lazy"
       {...props}
-      style={{ minHeight: '200px', background: '#f0f0f0' }}
+      style={{ ...props.style,  minHeight: '200px', background: '#f0f0f0' }}
     />
   );
 };
