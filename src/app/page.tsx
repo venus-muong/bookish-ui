@@ -5,7 +5,6 @@ import ImageModal from './ImageModal';
 // for photo layout: https://stackoverflow.com/a/39246470
 
 import styles from "./page.module.css";
-import placeholder from "./icons/image-placeholder.png";
 import LazyImage from "./common/LazyImage";
 
 export default function Home() {
@@ -27,6 +26,7 @@ export default function Home() {
         importImages && (
           <ImageModal 
               setImportImages={setImportImages}
+              images={images}
               setImages={setImages}
           />
         )
@@ -36,7 +36,6 @@ export default function Home() {
           <LazyImage
             key={i}
             url={`https://picsum.photos/seed/${img + 1}/info`}
-            // src={`https://picsum.photos/200/300?random=${i}`}
             alt={''}
             style={{
               width: '220px',

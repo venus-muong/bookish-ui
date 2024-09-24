@@ -2,16 +2,17 @@ import { useState } from 'react'
 import LazyImage from './common/LazyImage';
 import styles from './stylesheets/ImageModal.module.css';
 
-function ImageModal({ setImportImages, setImages }) {
+function ImageModal({ setImportImages, images, setImages }) {
     const [selectedPicsum, setSelectedPicsum] = useState<number[]>([]);
+    console.log('selectedPicsum', selectedPicsum)
     return (
         <>
-            <div style={{position: 'fixed', top: '20%', backgroundColor: 'white', borderRadius: '1rem', borderStyle: 'solid', borderColor: 'gray', width: '40rem', height: '23rem', zIndex: '20' }}>
-                <p style={{textAlign: 'center', color:'black'}}>Click image(s) to select {selectedPicsum.length > 0 ? `(${selectedPicsum.length})` : ''}</p>
-                <div style={{borderWidth: '0.1rem', marginLeft: '2.5rem', marginBottom: '1rem', width: '35rem', height: '15rem', borderStyle:'solid', borderColor: 'gray', overflowY: 'auto'}}>
-                    <div style={{marginLeft:'2.5rem', marginTop: '0.5rem'}}>
+            <div className={styles.modal}>
+                <p className={styles.desc}>Click image(s) to select {selectedPicsum.length > 0 ? `(${selectedPicsum.length})` : ''}</p>
+                <div className={styles['modal-container']} id={styles.scrollbar}>
+                    <div className={styles.pictures}>
                         {Array(200).fill(undefined).map((_, i) => (
-                            <span key={i} style={{margin: '0.1rem'}}>
+                            <span key={i} className={styles.picture}>
                                 <LazyImage
                                     onClick={() => {
                                         if (!selectedPicsum.includes(i)) {
@@ -23,7 +24,6 @@ function ImageModal({ setImportImages, setImages }) {
                                         }
                                     }}
                                     key={i}
-                                    // src={`https://picsum.photos/150/200/?random=${i}`}
                                     url={`https://picsum.photos/seed/${i + 1}/info`}
                                     alt={''}
                                     style={{
@@ -37,11 +37,7 @@ function ImageModal({ setImportImages, setImages }) {
                         ))}
                     </div>
                 </div>
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    gap: '1rem'
-                }}>
+                <div className={styles['button-container']}>
                     <button
                         className={styles['button-6']}
                         onClick={() => setImportImages(false)}
@@ -51,7 +47,8 @@ function ImageModal({ setImportImages, setImages }) {
                     <button
                         className={styles['button-6']}
                         onClick={() => {
-                            setImages(selectedPicsum);
+                            const newArr = images.concat(selectedPicsum);
+                            setImages(newArr);
                             setImportImages(false);
                         }}
                     >

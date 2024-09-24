@@ -1,7 +1,70 @@
+/* style={{position: 'fixed', top: '20%', backgroundColor: 'white', borderRadius: '1rem', borderStyle: 'solid', borderColor: 'gray', width: '40rem', height: '23rem', zIndex: '20' }} */
+.modal {
+  position: fixed;
+  top: 20%;
+  background-color: white;
+  border-radius: 1rem;
+  border: solid gray;
+  width: 40rem;
+  height: 23rem;
+  z-index: 20;
+}
+
+/* style={{textAlign: 'center', color:'black'}} */
+.desc {
+  text-align: center;
+  color: black;
+}
+
+/* style={{borderWidth: '0.1rem', marginLeft: '2.5rem', marginBottom: '1rem', width: '35rem', height: '15rem', borderStyle:'solid', borderColor: 'gray', overflowY: 'auto'}} */
+.modal-container {
+  border-width: 0.1rem;
+  margin-left: 2.5rem;
+  margin-bottom: 1rem;
+  width: 35rem;
+  height: 15rem;
+  border: solid gray;
+  overflow-y: auto;
+}
+
+.modal-container::-webkit-scrollbar {
+  width: 0;
+}
+
+.modal-container:hover::-webkit-scrollbar {
+  width: 1rem;
+}
+
+.modal-container:hover::-webkit-scrollbar-track {
+  background-color: white;
+  border: 0.1rem solid rgba(0, 0, 0, 0.2);
+}
+
+.modal-container:hover::-webkit-scrollbar-thumb {
+  background-color: gray;
+}
+
+/* style={{marginLeft:'2.5rem', marginTop: '0.5rem'}} */
+.modal-container .pictures {
+  margin-left: 2.5rem;
+  margin-top: 0.5rem;
+}
+
+.modal-container .pictures .picture {
+  margin: 0.1rem;
+}
+
+/* style={{ display: 'flex', justifyContent: 'center', gap: '1rem'}} */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
 .button-6 {
   align-items: center;
   background-color: #FFFFFF;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid gray;
   border-radius: .25rem;
   box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
   box-sizing: border-box;
@@ -22,4 +85,23 @@
   touch-action: manipulation;
   vertical-align: baseline;
   width: auto;
+}
+
+.button-6:hover,
+.button-6:focus {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.button-6:hover {
+  transform: translateY(-1px);
+}
+
+.button-6:active {
+  background-color: #F0F0F1;
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  color: rgba(0, 0, 0, 0.65);
+  transform: translateY(0);
 }
