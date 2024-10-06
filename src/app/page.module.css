@@ -10,7 +10,15 @@
 }
 
 .title {
+  text-align: center;
   font-size: 40px;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.title:focus::placeholder {
+  color: transparent;
 }
 
 .add-container {

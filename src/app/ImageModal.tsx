@@ -4,7 +4,6 @@ import styles from './stylesheets/ImageModal.module.css';
 
 function ImageModal({ setImportImages, images, setImages }) {
     const [selectedPicsum, setSelectedPicsum] = useState<number[]>([]);
-    console.log('selectedPicsum', selectedPicsum)
     return (
         <>
             <div className={styles.modal}>

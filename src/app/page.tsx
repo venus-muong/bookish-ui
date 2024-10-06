@@ -10,17 +10,27 @@ import LazyImage from "./common/LazyImage";
 export default function Home() {
   const [importImages, setImportImages] = useState<boolean>(false);
   const [images, setImages] = useState<number[]>([]);
+  const [title, setTitle] = useState<string>('');
 
   return (
     <div className={styles.page} style={{backgroundColor: importImages ? 'rgba(0, 0, 0, 0.2)' : ''}}>
-      <h1 className={styles.title}>Create Vision Board</h1>
+      {/* <h1 className={styles.title}>Enter Title Here</h1> */}
+      <input
+        type="text"
+        className={styles.title}
+        placeholder="Enter Title Here"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
       <div className={styles["add-container"]}>
-        <p>Add Title</p>
         <p 
           onClick={ () => {
               setImportImages(true);
           }}
         >Add Images</p>
+        <p>
+           Create Vision Board
+        </p>
       </div>
       {
         importImages && (
