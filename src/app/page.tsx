@@ -1,12 +1,12 @@
-"use client";
+'use client';
 import { useState, useEffect } from 'react';
 import ImageModal from './ImageModal';
-import { get, put } from './fetch/visionboard';
+import { get, post, put } from './fetch/visionboard';
 
 // for photo layout: https://stackoverflow.com/a/39246470
 
-import styles from "./page.module.css";
-import LazyImage from "./common/LazyImage";
+import styles from './page.module.css';
+import LazyImage from './common/LazyImage';
 
 export default function Home() {
   const [importImages, setImportImages] = useState<boolean>(false);
@@ -23,12 +23,15 @@ export default function Home() {
         setTitle(res.data.title);
         setImages(res.data.images);
       }
-    }
+    };
     fetchImages();
-  }, [])
+  }, []);
 
   return (
-    <div className={styles.page} style={{backgroundColor: importImages ? 'rgba(0, 0, 0, 0.2)' : ''}}>
+    <div
+      className={styles.page}
+      style={{ backgroundColor: importImages ? 'rgba(0, 0, 0, 0.2)' : '' }}
+    >
       <input
         type="text"
         className={styles.title}
@@ -36,35 +39,41 @@ export default function Home() {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <div className={styles["add-container"]}>
-        <p 
+      <div className={styles['add-container']}>
+        <p
           onClick={() => {
-              setImportImages(true);
+            setImportImages(true);
           }}
-        >Add Images</p>
+        >
+          Add Images
+        </p>
         <p
           onClick={() => {
             setEdit(!edit);
           }}
-        >{edit ? 'Finish Edit' : 'Edit Board'}
+        >
+          {edit ? 'Finish Edit' : 'Edit Board'}
         </p>
         <p
           onClick={async () => {
-            await put({id, title, images});
+            if (id === 0) {
+              await post({ title, images })
+              return;
+            }
+            await put({ id, title, images });
           }}
-        >Save Board
+        >
+          Save Board
         </p>
       </div>
-      {
-        importImages && (
-          <ImageModal 
-              setImportImages={setImportImages}
-              images={images}
-              setImages={setImages}
-          />
-        )
-      }
-      <div className={styles["vision-image"]}>
+      {importImages && (
+        <ImageModal
+          setImportImages={setImportImages}
+          images={images}
+          setImages={setImages}
+        />
+      )}
+      <div className={styles['vision-image']}>
         {images.map((img, i) => (
           <LazyImage
             key={img + `${i}`}
