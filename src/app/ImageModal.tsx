@@ -3,7 +3,7 @@ import LazyImage from './common/LazyImage';
 import styles from './stylesheets/ImageModal.module.css';
 
 function ImageModal({ setImportImages, images, setImages }) {
-    const [selectedPicsum, setSelectedPicsum] = useState<number[]>([]);
+    const [selectedPicsum, setSelectedPicsum] = useState<string[]>([]);
     return (
         <>
             <div className={styles.modal}>
@@ -14,23 +14,29 @@ function ImageModal({ setImportImages, images, setImages }) {
                             <span key={i} className={styles.picture}>
                                 <LazyImage
                                     onClick={() => {
-                                        if (!selectedPicsum.includes(i)) {
-                                            const newArr = [...selectedPicsum, i];
+                                        const url = `https://picsum.photos/seed/${i + 1}/info`;
+                                        if (!selectedPicsum.includes(url)) {
+                                            const newArr = [...selectedPicsum, url];
                                             setSelectedPicsum(newArr);
                                         } else {
-                                            const newArr = selectedPicsum.filter((pic) => pic !== i);
+                                            const newArr = selectedPicsum.filter((pic) => pic !== url);
                                             setSelectedPicsum(newArr);
                                         }
                                     }}
                                     key={i}
+                                    i={i}
                                     url={`https://picsum.photos/seed/${i + 1}/info`}
                                     alt={''}
                                     style={{
-                                        border: selectedPicsum.includes(i) ? '0.2rem solid black' : '0.2rem solid white',
+                                        border: selectedPicsum.includes(`https://picsum.photos/seed/${i + 1}/info`) ? '0.2rem solid black' : '0.2rem solid white',
                                         borderRadius: '0.1rem',
                                         width: '150px',
                                         height: '200px'
                                     }}
+                                    images={images}
+                                    setImages={setImages}
+                                    edit={false}
+                                    parent={'modal'}
                                 />
                             </span>
                         ))}

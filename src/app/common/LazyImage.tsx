@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
+import styles from "../page.module.css";
 
-const LazyImage = ({ url, alt, ...props }) => {
+const LazyImage = ({ i, url, alt, edit, images, setImages, parent, ...props }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [src, setSrc] = useState('');
   const imgRef = useRef(null);
@@ -38,14 +39,41 @@ const LazyImage = ({ url, alt, ...props }) => {
   }, []);
 
   return (
-    <img
-      ref={imgRef}
-      src={isVisible ? src : ''}
-      alt={alt}
-      loading="lazy"
-      {...props}
-      style={{ ...props.style,  minHeight: '200px', background: '#f0f0f0' }}
-    />
+    <>
+      {parent === 'modal' ? (
+        <img
+          ref={imgRef}
+          src={isVisible ? src : ''}
+          alt={alt}
+          loading="lazy"
+          {...props}
+          className={edit ? styles['editable-image'] : styles['non-editable-image']}
+        />
+        )
+        :
+        (<div className={styles['image-container']}>
+            <img
+              ref={imgRef}
+              src={isVisible ? src : ''}
+              alt={alt}
+              loading="lazy"
+              {...props}
+              className={edit ? styles['editable-image'] : styles['non-editable-image']}
+            />
+            {edit && 
+              ( <button 
+                className={edit ? styles['remove-image'] : ''}
+                onClick={() => {
+                  const newArr = images.filter((_, index: number) => index !== i);
+                  setImages(newArr);
+                }}>
+                  X
+              </button>)
+            }
+          </div>
+        )
+      }
+    </>
   );
 };
 

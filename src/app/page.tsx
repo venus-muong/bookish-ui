@@ -1,6 +1,7 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ImageModal from './ImageModal';
+import { get, put } from './fetch/visionboard';
 
 // for photo layout: https://stackoverflow.com/a/39246470
 
@@ -9,12 +10,25 @@ import LazyImage from "./common/LazyImage";
 
 export default function Home() {
   const [importImages, setImportImages] = useState<boolean>(false);
-  const [images, setImages] = useState<number[]>([]);
+  const [id, setId] = useState<number>(0);
   const [title, setTitle] = useState<string>('');
+  const [images, setImages] = useState<string[]>([]);
+  const [edit, setEdit] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      const res = await get();
+      if (res) {
+        setId(res.data.id);
+        setTitle(res.data.title);
+        setImages(res.data.images);
+      }
+    }
+    fetchImages();
+  }, [])
 
   return (
     <div className={styles.page} style={{backgroundColor: importImages ? 'rgba(0, 0, 0, 0.2)' : ''}}>
-      {/* <h1 className={styles.title}>Enter Title Here</h1> */}
       <input
         type="text"
         className={styles.title}
@@ -24,12 +38,21 @@ export default function Home() {
       />
       <div className={styles["add-container"]}>
         <p 
-          onClick={ () => {
+          onClick={() => {
               setImportImages(true);
           }}
         >Add Images</p>
-        <p>
-           Create Vision Board
+        <p
+          onClick={() => {
+            setEdit(!edit);
+          }}
+        >{edit ? 'Finish Edit' : 'Edit Board'}
+        </p>
+        <p
+          onClick={async () => {
+            await put({id, title, images});
+          }}
+        >Save Board
         </p>
       </div>
       {
@@ -44,13 +67,14 @@ export default function Home() {
       <div className={styles["vision-image"]}>
         {images.map((img, i) => (
           <LazyImage
-            key={i}
-            url={`https://picsum.photos/seed/${img + 1}/info`}
+            key={img + `${i}`}
+            i={i}
+            url={img}
             alt={''}
-            style={{
-              width: '220px',
-              height: '300px'
-          }}
+            edit={edit}
+            images={images}
+            setImages={setImages}
+            parent={'board'}
           />
         ))}
       </div>

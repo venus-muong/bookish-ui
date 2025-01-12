@@ -24,14 +24,21 @@
 .add-container {
   display: grid;
   justify-items: center;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto auto auto;
   padding: 5px;
   width: 50%;
 }
 
+
 .add-container p {
   cursor: pointer;
   text-align: center;
+  display: inline-block;
+  transition: transform 0.1s ease;
+}
+
+.add-container p:active {
+  transform: translateY(2px);
 }
 
 .vision-image {
@@ -45,4 +52,48 @@
 
 .vision-image .add-image {
   cursor: pointer;
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+  width: 220px;
+  height: 300px;
+  min-height: 200px;
+}
+
+.editable-image, .non-editable-image {
+  width: 220px;
+  height: 300px;
+  min-height: 200px;
+  background: #f0f0f0;
+  border: 0.2rem solid white;
+  border-radius: 0.1rem;
+  transition: border-color 0.3s ease;
+}
+
+.editable-image:hover {
+  border-color: black;
+  cursor: pointer;
+}
+
+.remove-image {
+  position: absolute;
+  top: 8px;
+  right: 4px;
+  color: grey;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.remove-image:hover {
+  color: black
 }
