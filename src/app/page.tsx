@@ -2,11 +2,9 @@
 import { useState, useEffect } from 'react';
 import ImageModal from './ImageModal';
 import { get, post, put } from './fetch/visionboard';
-
-// for photo layout: https://stackoverflow.com/a/39246470
-
 import styles from './page.module.css';
 import LazyImage from './common/LazyImage';
+// for photo layout: https://stackoverflow.com/a/39246470
 
 export default function Home() {
   const [importImages, setImportImages] = useState<boolean>(false);
@@ -29,8 +27,7 @@ export default function Home() {
 
   return (
     <div
-      className={styles.page}
-      style={{ backgroundColor: importImages ? 'rgba(0, 0, 0, 0.2)' : '' }}
+      className={`${styles.page} ${importImages ? styles['dimmed-background'] : ''}`}
     >
       <input
         type="text"
@@ -56,8 +53,8 @@ export default function Home() {
         </p>
         <p
           onClick={async () => {
-            if (id === 0) {
-              await post({ title, images })
+            if (!id) {
+              await post({ title, images });
               return;
             }
             await put({ id, title, images });

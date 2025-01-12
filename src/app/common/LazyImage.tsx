@@ -1,7 +1,17 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styles from '../page.module.css';
 
-const LazyImage = ({
+interface LazyImageProps {
+  i: number;
+  url: string;
+  alt: string;
+  edit: boolean;
+  images: string[];
+  setImages: (images: string[]) => void;
+  parent: string;
+}
+
+const LazyImage: React.FC<LazyImageProps> = ({
   i,
   url,
   alt,
@@ -59,6 +69,8 @@ const LazyImage = ({
           className={
             edit ? styles['editable-image'] : styles['non-editable-image']
           }
+          width={100}
+          height={100}
         />
       ) : (
         <div className={styles['image-container']}>
@@ -71,6 +83,8 @@ const LazyImage = ({
             className={
               edit ? styles['editable-image'] : styles['non-editable-image']
             }
+            width={100}
+            height={100}
           />
           {edit && (
             <button
